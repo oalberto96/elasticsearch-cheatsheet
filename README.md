@@ -148,3 +148,85 @@ POST _aliases
   ]
 }
 ```
+
+### Set an alias with a filter
+```
+POST _aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": "<index_name>",
+        "alias": "<alias_name>",
+        "filter": {
+          <filter>
+        }
+      }
+    }
+  ]
+}
+```
+
+#### Example
+```
+POST _aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": "dogs",
+        "alias": "best-dogos",
+        "filter": {
+          "term": {
+            "breed": "husky"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+## Templates
+### Define a template
+```
+PUT _template/logs
+{
+  "aliases": {
+    "<alias>": {}
+  },
+  "mappings": {
+    "properties": {
+      "<field>": {
+        "type": "<field_type>"
+       }
+    }
+  },
+  "settings": {
+    <settings>
+  },
+  "index_patterns": ["<pattern>"]
+}
+```
+
+#### Example
+```
+PUT _template/logs
+{
+  "aliases": {
+    "logs": {}
+  },
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "keyword"
+       }
+    }
+  },
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "index_patterns": ["logs-*"]
+}
+```
