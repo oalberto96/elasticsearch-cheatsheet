@@ -230,3 +230,41 @@ PUT _template/logs
   "index_patterns": ["logs-*"]
 }
 ```
+### Dynamic templates
+#### Example
+```
+PUT _template/<template_name>
+{
+  "index_patterns": ["<pattern>"]
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "strings_to_keywords": {
+          "match_mapping_type": "string",
+          "unmatch": "*_text",
+          "mapping": {
+            "type": "keyword"
+          }
+        }
+      },
+      {
+        "longs_to_integers": {
+          "match_mappings_type": "long",
+          "mapping": {
+            "type": "integer"
+          }
+        }
+      },
+      {
+        "strings_to_text": {
+          "match_mapping_type": "string",
+          "match": "*_text",
+          "mapping": {
+            "type": "text"
+          }
+        }
+      }
+    ]
+  }
+}
+```
