@@ -83,3 +83,68 @@ DELETE <index_name>
 DELETE <index_name>/_doc/<document_id>
 ```
 
+### Search documents
+```
+GET <index_name>/_search
+```
+
+### Get source of a document
+```
+GET <index_name>/_source/<document_id>
+```
+
+## Aliases
+### Create an index
+```
+POST _aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": "<index_name>",
+        "alias": "<alias_name>"
+      }
+    }
+  ]
+}
+```
+### Delete an index
+```
+POST _aliases
+{
+  "actions": [
+    {
+      "remove": {
+        "index": "<index_name>",
+        "alias": "<alias_name>"
+      }
+    }
+  ]
+}
+```
+#### Example
+```
+POST _aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": "dogs",
+        "alias": "doggos"
+      }
+    },
+    {
+      "add": {
+        "index": "dogs",
+        "alias": "puppies"
+      }
+    },
+    {
+      "remove": {
+        "index": "dogs",
+        "alias": "cats"
+      }
+    }
+  ]
+}
+```
